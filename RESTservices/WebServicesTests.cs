@@ -5,6 +5,7 @@ using TestWebProject.REST.REST_dto;
 using TestWebProject.REST;
 using RESTservices.Utilities;
 using RESTservices.RESTdto;
+using Newtonsoft.Json;
 
 namespace RESTservices
 {
@@ -21,7 +22,7 @@ namespace RESTservices
         }
 
         [TestMethod]
-        public void VerifyResultCountHeader()
+        public void VerifyResultContentTypeHeader()
         {
             string headerName = "Count";
             string contentType = "Content-Type";
@@ -35,10 +36,12 @@ namespace RESTservices
         public void VerifyBodyOfGetRequest()
         {
             UserPostDTO userPostRequest = new UserPostDTO();
-            string userPostRequestJson = JsonSerialization.SerializeToJson(userPostRequest);
+            string userPostRequestJson = JsonConvert.SerializeObject(userPostRequest);
+
             string userId = HTTPrequests.GetResponseHeader(HTTPrequests.ExecutePostRequest(_url, userPostRequestJson), "id");
-            string body = HTTPrequests.GetResponseBody(HTTPrequests.ExecuteGetRequest(_url + '/' + userId));          
-            UserGetDTO userGetResponse = JsonSerialization.DeserializeFromJson<UserGetDTO>(body);
+            string body = HTTPrequests.GetResponseBody(HTTPrequests.ExecuteGetRequest(_url + '/' + userId));
+            UserGetDTO userGetResponse = JsonConvert.DeserializeObject<UserGetDTO>(body);
+              
             Assert.IsTrue(RestComparator.CompareUserDTOs(userPostRequest, userGetResponse));
         }
     }

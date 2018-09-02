@@ -74,7 +74,6 @@
     <Compile Include="RESTdto\UserGetDTO.cs" />
     <Compile Include="RESTdto\UserPostDTO.cs" />
     <Compile Include="Utilities\HTTPrequests.cs" />
-    <Compile Include="Utilities\JsonSerialization.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
