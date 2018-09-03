@@ -24,7 +24,7 @@ namespace RESTservices
         [TestMethod]
         public void VerifyResultContentTypeHeader()
         {
-            string headerName = "Count";
+            string headerName = "Headers";
             string contentType = "Content-Type";
             string contentTypeValueExpected = "application/json; charset=utf-8";
             string headerValue = HTTPrequests.GetResponseHeader(HTTPrequests.ExecuteGetRequest(_url), headerName);
@@ -38,10 +38,14 @@ namespace RESTservices
             UserPostDTO userPostRequest = new UserPostDTO();
             string userPostRequestJson = JsonConvert.SerializeObject(userPostRequest);
 
-            string userId = HTTPrequests.GetResponseHeader(HTTPrequests.ExecutePostRequest(_url, userPostRequestJson), "id");
-            string body = HTTPrequests.GetResponseBody(HTTPrequests.ExecuteGetRequest(_url + '/' + userId));
+            var response = HTTPrequests.ExecutePostRequest(_url, userPostRequestJson);
+
+            string location = HTTPrequests.GetResponseHeader(HTTPrequests.ExecutePostRequest(_url, userPostRequestJson), "location");
+
+            string body = HTTPrequests.GetResponseBody(HTTPrequests.ExecuteGetRequest(location));
+           
             UserGetDTO userGetResponse = JsonConvert.DeserializeObject<UserGetDTO>(body);
-              
+
             Assert.IsTrue(RestComparator.CompareUserDTOs(userPostRequest, userGetResponse));
         }
     }

@@ -28,7 +28,7 @@ namespace RESTservices.RESTdto
         public UserPostDTO()
         {
             username = Randomizer.RandomString(10);
-            id = "1000093";
+            id = "10003";
             email = Randomizer.RandomString(10);
             city = Randomizer.RandomString(10);
             phone = "1-770-736-8031 x56442";

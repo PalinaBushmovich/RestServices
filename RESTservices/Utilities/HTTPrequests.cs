@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace TestWebProject.REST
 {
@@ -64,6 +66,16 @@ namespace TestWebProject.REST
             }
 
             return request;
+        }
+
+        public static int GetUserId(string location)
+        {
+           string[] elementsList = location.Split('/');
+
+            int numberOfTheLastElement = elementsList.Length - 1;
+
+            int id = Convert.ToInt32(elementsList[numberOfTheLastElement]);
+            return id;
         }
 
     }
